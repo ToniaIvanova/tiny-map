@@ -1,0 +1,11 @@
+{
+  "name": "tiny-map",
+  "version": "1.0.0",
+  "scripts": {
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && npm start"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0"
+  }
+}
