@@ -7,20 +7,24 @@ export default function User({ currentUser, changeCurrentUser }) {
   };
 
   return <div style={{
-      display: 'flex',
-      'flexFlow': 'column wrap'
+      display: 'inline-block',
+      'flexFlow': 'column wrap',
+      float: 'right',
     }}>
-    <Avatar size={64} style={{
+    <Button size="small" onClick={changeUser}
+      style={{
+        verticalAlign: 'middle',
+        margin: '5px',
+        border: 'none',
+      }}>
+      Сменить власть
+    </Button>
+    <Avatar size={50} style={{
         backgroundColor: '#1890ff',
         verticalAlign: 'middle'
       }}>
         {currentUser.name}
     </Avatar>
-    <Button size="small" onClick={changeUser}
-      style={{
-        verticalAlign: 'middle',
-      }}>
-      Сменить власть
-    </Button>
+    
   </div>
 }
