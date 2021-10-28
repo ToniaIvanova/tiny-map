@@ -3,11 +3,12 @@ import TinyMap from './TinyMap';
 import styles from './styles.module.css';
 import ProductChoice from './productChoice/ProductChoice';
 import NewStation from './newStation/NewStation';
-import User from './User/User';
+import User from './Header/User';
 import { Tabs } from 'antd';
 
 import UserApi from './api/user.api';
 import ProductApi from './api/product.api';
+import Header from './Header/Header';
 const { TabPane } = Tabs;
 
 export default function App() { 
@@ -52,7 +53,11 @@ export default function App() {
     <div className={styles.app}>
       <TinyMap selectedStations={selectedStations} />
       <div className={styles.menu}>
-        <Tabs defaultActiveKey="1" onChange={tabChange}>
+        <Header
+          currentUser={currentUser}
+          changeCurrentUser={changeCurrentUser}
+        />
+        <Tabs defaultActiveKey="1" onChange={tabChange} style={{ margin: '0px'}}>
           <TabPane tab="По продуктам" key="1">
             <ProductChoice
               updateTable={updateTable}
@@ -67,9 +72,7 @@ export default function App() {
             <NewStation currentUser={UserApi.currentUser}/>
           </TabPane>
         </Tabs>
-       
       </div>
-       <User currentUser={currentUser} changeCurrentUser={changeCurrentUser}/>
     </div>
   );
 

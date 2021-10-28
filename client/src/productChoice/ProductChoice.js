@@ -4,7 +4,7 @@ import ProductTable from './ProductTable';
 import styles from '../styles.module.css';
 
 export default function ProductChoice({ selectedStations, tableVisability, updateTable }) {
-  return <div className={styles.menu}>
+  return <div>
       <ProductSearch updateTable={updateTable} />
       { tableVisability && 
         <ProductTable
