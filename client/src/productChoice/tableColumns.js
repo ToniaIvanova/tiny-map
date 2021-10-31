@@ -28,9 +28,9 @@ const tableColumns = [
     render: station => {
       function onChange(checked) {
         StationApi.putStationDone({
-          stationId: station._id,
+          stationId: station.stationId,
           currentUser: UserApi.currentUser,
-          checked
+          done: checked,
         });
       }
 

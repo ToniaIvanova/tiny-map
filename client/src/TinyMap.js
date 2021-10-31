@@ -6,7 +6,7 @@ import { colors, gray } from './constants/colors';
 export default function TinyMap({ selectedStations }) {
   let k = 0;
   let currentProduct = selectedStations[0] ? selectedStations[0].productName : '';
-  console.log({ selectedStations });
+
   return <YMaps>
     <Map className={styles.map} defaultState={{ center:[19.441468, 17.496825], zoom: 2 }}>
     { selectedStations.map(station => {

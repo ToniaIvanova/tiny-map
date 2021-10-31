@@ -1,14 +1,13 @@
 import React from 'react';
 import Guest from '../constants/defaultUser';
 import { Form, Input, Button, Select, Switch, Typography } from 'antd';
-import ProductApi from '../api/product.api';
+import StationApi from '../api/station.api';
 
-export default function NewStation(props){
+export default function NewStation({ currentUser }){
   
   const onFinish = async newStationData => {
-    newStationData.userName = props.userName;
-    console.log('Success:', newStationData);
-    await ProductApi.postNewStation(newStationData);
+    newStationData.userId = currentUser._id;
+    await StationApi.postNewStation(newStationData);
   };
 
   const onFinishFailed = errorInfo => {
@@ -48,8 +47,8 @@ export default function NewStation(props){
       </Select>
     </Form.Item>
 
-    <Form.Item label="Выполнено" name="doneCount" valuePropName="checked">
-      { props.currentUser !== Guest ? <Switch /> : <Typography.Text>Пожалуйста, войтите :)</Typography.Text> }
+    <Form.Item label="Выполнено" name="done" valuePropName="checked">
+      { currentUser._id !== Guest._id ? <Switch /> : <Typography.Text>Пожалуйста, войтите :)</Typography.Text> }
     </Form.Item>
 
     <Form.Item wrapperCol={{span: 14, offset: 7}}>

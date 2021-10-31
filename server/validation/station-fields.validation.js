@@ -1,4 +1,6 @@
-function stationFieldsValidation(stationData){
+import chalk from 'chalk';
+
+async function stationFieldsValidation(stationData){
   try {
     if(!stationData.productName){
       throw('Product name is required');
@@ -20,10 +22,10 @@ function stationFieldsValidation(stationData){
     }
     return true;
   } catch(error) {
-    console.log(error);
+    console.log(chalk.red(error));
   }
 }
 
-module.exports = {
+export {
   stationFieldsValidation,
 }

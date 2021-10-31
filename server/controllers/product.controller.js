@@ -1,27 +1,25 @@
-const ObjectId = require("mongodb").ObjectId;
+import mongoose from "mongoose";
+import ProductModel from '../storage/models/product.model.js';
+import StationModel from '../storage/models/station.model.js';
 
 class ProductController {
   getAllProducts = async (req, res) => {
-    const productCollection = req.app.locals.product;
-    const product = await productCollection.find({}).toArray();
-  
-    res.send(product);
+    const products = await ProductModel.find({});
+    
+    return res.send(products);
   }
 
   getProductsByIds = async (req, res) => {
     const productIds = JSON.parse(req.params.productIds);
     if (productIds[0]) {
-      const objectIds = productIds.map(id => ObjectId(id));
+      const objectIds = productIds.map(mongoose.Types.ObjectId);
   
-      const productCollection = req.app.locals.product;
-      const product = await productCollection.find({ _id: { $in: objectIds } }).toArray();
+      const products = await ProductModel.find({ _id: { $in: objectIds } });
   
-      res.send(product);
+      return res.send(products);
     }
-    else {
-      res.send([]);
-    }
+    return res.send([]);
   }
 }
 
-module.exports = new ProductController();
+export default new ProductController();
