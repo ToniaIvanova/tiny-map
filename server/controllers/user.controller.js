@@ -1,14 +1,14 @@
-const ObjectId = require("mongodb").ObjectId;
+import mongoose from "mongoose";
+import UserModel from "../storage/models/user.model.js";
 
 class UserController {
   getUserById = async (req, res) => {
-    const userId = ObjectId(req.params.id);
-  
-    const userCollection = req.app.locals.user;
-    const currentUser = await userCollection.findOne({ _id: userId });
+    const userId = mongoose.Types.ObjectId(req.params.id);
+
+    const currentUser = await UserModel.findOne({ _id: userId });
   
     res.send(currentUser);
   }
 }
 
-module.exports = new UserController();
+export default new UserController();

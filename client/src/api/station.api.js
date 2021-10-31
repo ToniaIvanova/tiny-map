@@ -9,6 +9,7 @@ class StationApi {
       const done = stationDone ? stationDone.done : false;
   
       return {
+        stationId: station._id,
         key: station.name,
         productName,
         stationName: station.name,

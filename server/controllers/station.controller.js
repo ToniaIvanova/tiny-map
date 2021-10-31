@@ -1,55 +1,50 @@
-const ObjectId = require("mongodb").ObjectId;
+import mongoose from "mongoose";
+import StationModel from "../storage/models/station.model.js";
+import DoneModel from "../storage/models/done.model.js";
+import { stationFieldsValidation } from "../validation/station-fields.validation.js";
+import { insertNewStation } from "../services/insert-new-station.service.js";
+import { putDone } from "../services/put-done.service.js";
 
 class StationController {
   createStation = async (req, res) => {
-    console.log('createStation doesn\'t work now.');
-    // const stationData = req.body;
-    // 
-    // if (validation.stationFieldsValidation(stationData)){
-    //   const stationId = await services.insertNewStation(req.app.locals, stationData, mongoClient);
-    //   if (stationData.userName && stationData.doneCount) {
-    //     await services.insertNewDoneCount(req.app.locals, stationData, mongoClient, stationId);
-    //   }
-    // }
+    const stationData = req.body;
+
+    await stationFieldsValidation(stationData);
+
+    const stationId = await insertNewStation(stationData);
+    if (stationData.userId && stationData.done) {
+      await putDone({ stationId, userId: stationData.userId, done: stationData.done });
+    }
   
-    res.send({});
+    return res.send({});
   }
 
   getStationsByProductId = async (req, res) => {
-    const productId = ObjectId(req.params.productId);
+    const productId = mongoose.Types.ObjectId(req.params.productId);
 
-    const stationCollection = req.app.locals.station;
-    const station = await stationCollection.find({ productId }).toArray();
+    const stationsByProductId = await StationModel.find({ productId });
 
-    res.send(station);
+    return res.send(stationsByProductId);
   }
 
   getStationDone = async (req, res) => {
-    const stationId = ObjectId(req.params.stationId);
-    const userId = ObjectId(req.params.userId);
-    const doneCountCollection = req.app.locals.doneCount;
-  
-    const stationDone = await doneCountCollection.findOne({ userId, stationId });
-      
-    res.send({ stationDone });
+    const stationId = mongoose.Types.ObjectId(req.params.stationId);
+    const userId = mongoose.Types.ObjectId(req.params.userId);
+
+    const stationDone = await DoneModel.findOne({ userId, stationId });
+
+    return res.send({ stationDone });
   }
 
   putStationDone = async (req, res) => {
-    console.log('putStationDone doesn\'t work now.');
-    // const stationId = ObjectId(req.params.stationId);
-    // const userId = ObjectId(req.params.userId);
-    // const done = req.body.done;
-    // const doneCountCollection = req.app.locals.doneCount;
+    const stationId = mongoose.Types.ObjectId(req.params.stationId);
+    const userId = mongoose.Types.ObjectId(req.params.userId);
+    const done = req.body.done;
 
-    // let stationDone = await doneCountCollection.findOne({ userId, stationId });
-    // if (!stationDone) {
-    //   stationDone = await doneCountCollection.insert({ userId, stationId, done });
-    // } else {
-    //   stationDone = await doneCountCollection.update({ userId, stationId }, { done });
-    // }
+    await putDone({ stationId, userId, done });
   
-    res.send({});
+    return res.send({});
   }
 }
 
-module.exports = new StationController();
+export default new StationController();
