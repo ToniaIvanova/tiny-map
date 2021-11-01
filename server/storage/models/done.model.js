@@ -8,7 +8,7 @@ const DoneSchema = new Schema({
   stationId: ObjectId,
   done: Boolean,
   doneCount: Number
-});
+}, { versionKey: false });
 
 const DoneModel = mongoose.model('Done', DoneSchema, 'DoneCount');
 

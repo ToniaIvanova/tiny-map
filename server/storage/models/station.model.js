@@ -9,7 +9,7 @@ const StationSchema = new Schema({
   needCount: Number,
   region: String,
   place: [Number]
-});
+}, { versionKey: false });
 
 const StationModel = mongoose.model('Station', StationSchema, 'Station');
 
