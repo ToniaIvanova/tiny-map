@@ -1,6 +1,7 @@
 {
   "name": "tiny-map-server",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js",
     "migrate:create": "./node_modules/.bin/migrate-mongo create",
