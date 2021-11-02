@@ -3,11 +3,11 @@ import baseApi from './base.api';
 class StationApi {
   getStationsByProductId = async ({ productId, productName, currentUser }) => {
     const stationsData = await baseApi.get(`/station/product/${productId}`);
-  
+
     const stationsForTable = await Promise.all(stationsData.data.map(async station => {
       const stationDone = await this.getStationDone({ stationId: station._id, currentUser });
       const done = stationDone ? stationDone.done : false;
-  
+
       return {
         stationId: station._id,
         key: station.name,

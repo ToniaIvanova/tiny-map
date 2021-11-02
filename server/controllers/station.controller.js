@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import StationModel from "../storage/models/station.model.js";
 import DoneModel from "../storage/models/done.model.js";
 import { stationFieldsValidation } from "../validation/station-fields.validation.js";
@@ -20,7 +19,7 @@ class StationController {
   }
 
   getStationsByProductId = async (req, res) => {
-    const productId = mongoose.Types.ObjectId(req.params.productId);
+    const { productId } = req.params;
 
     const stationsByProductId = await StationModel.find({ productId });
 
@@ -28,8 +27,7 @@ class StationController {
   }
 
   getStationDone = async (req, res) => {
-    const stationId = mongoose.Types.ObjectId(req.params.stationId);
-    const userId = mongoose.Types.ObjectId(req.params.userId);
+    const { stationId, userId } = req.params;
 
     const stationDone = await DoneModel.findOne({ userId, stationId });
 
@@ -37,9 +35,8 @@ class StationController {
   }
 
   putStationDone = async (req, res) => {
-    const stationId = mongoose.Types.ObjectId(req.params.stationId);
-    const userId = mongoose.Types.ObjectId(req.params.userId);
-    const done = req.body.done;
+    const { stationId, userId } = req.params;
+    const { done } = req.body;
 
     await putDone({ stationId, userId, done });
   

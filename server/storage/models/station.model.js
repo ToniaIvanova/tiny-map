@@ -1,16 +1,14 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
-
-const StationSchema = new Schema({
+const StationSchema = new mongoose.Schema({
+  _id: String,
   name: String,
-  productId: ObjectId,
+  productId: String,
   needCount: Number,
   region: String,
   place: [Number]
 }, { versionKey: false });
 
-const StationModel = mongoose.model('Station', StationSchema, 'Station');
+const StationModel = mongoose.model('Station', StationSchema, 'station');
 
 export default StationModel;

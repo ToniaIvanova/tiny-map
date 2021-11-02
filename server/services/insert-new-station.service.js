@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import ProductModel from "../storage/models/product.model.js";
 import StationModel from "../storage/models/station.model.js";
 
@@ -6,6 +7,7 @@ const insertProduct = async productName => {
   let productId;
   if (!product) {
     const newProduct = new ProductModel({
+      _id: new mongoose.Types.ObjectId(),
       name: productName,
       stations: [],
     });
@@ -24,6 +26,7 @@ const insertStation = async ({ stationData, productId }) => {
   let stationId;
   if (!station) {
     const newStation = new StationModel({
+      _id: new mongoose.Types.ObjectId(),
       name: stationData.stationName,
       productId,
       place: stationData.place,
