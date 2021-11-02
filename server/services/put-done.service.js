@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import DoneModel from "../storage/models/done.model.js";
 
 async function putDone({ stationId, userId, done }) {
@@ -5,6 +6,7 @@ async function putDone({ stationId, userId, done }) {
 
   if (!stationDone) {
     const newStationDone = new DoneModel({
+      _id: new mongoose.Types.ObjectId(),
       userId,
       stationId,
       done,

@@ -3,7 +3,6 @@ import TinyMap from './TinyMap';
 import styles from './styles.module.css';
 import ProductChoice from './productChoice/ProductChoice';
 import NewStation from './newStation/NewStation';
-import User from './Header/User';
 import { Tabs } from 'antd';
 
 import UserApi from './api/user.api';

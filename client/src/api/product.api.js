@@ -8,6 +8,7 @@ class ProductApi {
 
   getProductsByIds = async ({ productIds, currentUser }) => {
     const productsData = await baseApi.get(`/product/["${productIds.join("\", \"")}"]`);
+
     const stationsForTable = (await Promise.all(
        productsData.data.map(async product => (await StationApi.getStationsByProductId({
         productId: product._id,
