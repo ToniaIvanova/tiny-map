@@ -7,7 +7,6 @@ const insertProduct = async productName => {
   let productId;
   if (!product) {
     const newProduct = new ProductModel({
-      _id: new mongoose.Types.ObjectId(),
       name: productName,
       stations: [],
     });
@@ -22,11 +21,10 @@ const insertProduct = async productName => {
 };
 
 const insertStation = async ({ stationData, productId }) => {
-  const station = await StationModel.findOne({ name: stationData.stationName });
+  const station = await StationModel.findOne({ name: stationData.stationName, region: stationData.region });
   let stationId;
   if (!station) {
     const newStation = new StationModel({
-      _id: new mongoose.Types.ObjectId(),
       name: stationData.stationName,
       productId,
       place: stationData.place,
@@ -45,7 +43,7 @@ const insertStation = async ({ stationData, productId }) => {
 const insertStationIdInProduct = async ({ productId, stationId }) => {
   const productToUpdate = await ProductModel.findOne({ _id: productId });
   const isStationIdInProduct = productToUpdate.stations.some(function(station) {
-    return station.equals(stationId);
+    return station === stationId;
   })
   if (!isStationIdInProduct) {
     await ProductModel.updateOne({

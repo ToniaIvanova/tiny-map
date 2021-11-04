@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 
 const StationSchema = new mongoose.Schema({
-  _id: String,
   name: String,
-  productId: String,
+  productId: mongoose.Schema.ObjectId,
   needCount: Number,
   region: String,
   place: [Number]
