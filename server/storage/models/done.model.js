@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 
 const DoneSchema = new mongoose.Schema({
-  _id: String,
-  userId: String,
-  stationId: String,
+  userId: mongoose.Schema.ObjectId,
+  stationId: mongoose.Schema.ObjectId,
   done: Boolean,
 }, { versionKey: false });
 
