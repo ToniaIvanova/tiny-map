@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Avatar, Button } from 'antd';
+import UserActions from '../resources/user/user.actions';
+import UserSelector from '../resources/user/user.selector';
 
-export default function User({ currentUser, changeCurrentUser }) {
+function User({ currentUser, setCurrentUser }) {
   const changeUser = () => {
-    changeCurrentUser();
+    setCurrentUser('60e06fe6ad2cc121d81eb19a');
   };
 
   return <div style={{
@@ -23,8 +26,18 @@ export default function User({ currentUser, changeCurrentUser }) {
         backgroundColor: '#1890ff',
         verticalAlign: 'middle'
       }}>
-        {currentUser.name}
+        {currentUser ? currentUser.name : 'Гость'}
     </Avatar>
     
   </div>
-}
+};
+
+const mapStateToProps = state => ({
+  currentUser: UserSelector.getCurrentUser(state),
+});
+
+const mapDispatchToProps = {
+  setCurrentUser: UserActions.setCurrentUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)

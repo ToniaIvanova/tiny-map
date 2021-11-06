@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import TinyMap from './TinyMap';
 import styles from './styles.module.css';
 import ProductChoice from './productChoice/ProductChoice';
 import NewStation from './newStation/NewStation';
 import { Tabs } from 'antd';
 
-import UserApi from './api/user.api';
 import ProductApi from './api/product.api';
 import Header from './Header/Header';
+import UserSelector from './resources/user/user.selector';
 const { TabPane } = Tabs;
 
-export default function App() { 
+function App({ currentUser }) { 
   const [selectedProductIds, setSelectedProductIds] = useState([]);
   const [selectedStations, setSelectedStations] = useState([]);
 
@@ -18,7 +19,6 @@ export default function App() {
   const [selectedRegions, setSelectedRegions] = useState([]);
 
   const [tableVisability, setTableVisability] = useState(false);
-  const [currentUser, setCurrentUser] = useState(UserApi.currentUser);
 
   const updateTable = newProductId => {
     setTableVisability(true);
@@ -34,7 +34,7 @@ export default function App() {
     setSelectedStations(
       await ProductApi.getProductsByIds({
         productIds: selectedProductIds,
-        currentUser: UserApi.currentUser
+        currentUser,
       }));
     // setSelectedRegions(await getProductsByRegions(selectedRegionNames));
   }, [selectedProductIds, selectedRegionNames]);
@@ -43,19 +43,11 @@ export default function App() {
     console.log('tab was changed');
   }
 
-  const changeCurrentUser = async () => {
-    setCurrentUser(await UserApi.getUserById({ id: '60e06fe6ad2cc121d81eb19a' })); // Тонечка
-    console.log('currentUser: ', UserApi.currentUser);
-  }
-
   return (
     <div className={styles.app}>
       <TinyMap selectedStations={selectedStations} />
       <div className={styles.menu}>
-        <Header
-          currentUser={currentUser}
-          changeCurrentUser={changeCurrentUser}
-        />
+        <Header />
         <Tabs defaultActiveKey="1" onChange={tabChange} style={{ margin: '0px'}}>
           <TabPane tab="По продуктам" key="1">
             <ProductChoice
@@ -68,11 +60,16 @@ export default function App() {
             Content of Tab Pane 2
           </TabPane>
           <TabPane tab="Добавить новую станцию" key="3">
-            <NewStation currentUser={UserApi.currentUser}/>
+            <NewStation/>
           </TabPane>
         </Tabs>
       </div>
     </div>
   );
+};
 
-}
+const mapStateToProps = state => ({
+  currentUserMe: UserSelector.getCurrentUser(state),
+});
+
+export default connect(mapStateToProps)(App);
