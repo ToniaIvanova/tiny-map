@@ -1,6 +1,4 @@
-import { Switch } from "antd";
-import StationApi from "../api/station.api";
-import UserApi from "../api/user.api";
+import DoneSwitch from "./DoneSwitch";
 
 const tableColumns = [
   {
@@ -25,20 +23,7 @@ const tableColumns = [
   },
   {
     title: 'Done',
-    render: station => {
-      function onChange(checked) {
-        StationApi.putStationDone({
-          stationId: station.stationId,
-          currentUser: UserApi.currentUser,
-          done: checked,
-        });
-      }
-
-      if (station.done) {
-        return <Switch onChange={onChange} defaultChecked/>
-      }
-      return <Switch onChange={onChange} />;
-    }
+    render: station => <DoneSwitch station={station} />
   },
   {
     title: 'region',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ProductSearch from './ProductSearch';
 import ProductTable from './ProductTable';
 import styles from '../styles.module.css';

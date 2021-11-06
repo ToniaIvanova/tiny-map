@@ -31,6 +31,7 @@ function App({ currentUser }) {
   }
 
   useEffect(async() => {
+    console.log({ currentUser });
     setSelectedStations(
       await ProductApi.getProductsByIds({
         productIds: selectedProductIds,
@@ -69,7 +70,7 @@ function App({ currentUser }) {
 };
 
 const mapStateToProps = state => ({
-  currentUserMe: UserSelector.getCurrentUser(state),
+  currentUser: UserSelector.getCurrentUser(state),
 });
 
 export default connect(mapStateToProps)(App);
