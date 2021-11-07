@@ -6,7 +6,7 @@ import UserSelector from '../resources/user/user.selector';
 
 function User({ currentUser, setCurrentUser }) {
   const changeUser = () => {
-    setCurrentUser('60e06fe6ad2cc121d81eb19a');
+    setCurrentUser('60e06fe6ad2cc121d81eb19a'); // Тонечка
   };
 
   return <div style={{

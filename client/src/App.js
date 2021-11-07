@@ -1,61 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import TinyMap from './TinyMap';
+import { Tabs } from 'antd';
 import styles from './styles.module.css';
+
+import TinyMap from './TinyMap';
 import ProductChoice from './productChoice/ProductChoice';
 import NewStation from './newStation/NewStation';
-import { Tabs } from 'antd';
-
-import ProductApi from './api/product.api';
 import Header from './Header/Header';
+
 import UserSelector from './resources/user/user.selector';
+import ProductSelector from './resources/product/product.selector';
+import ProductActions from './resources/product/product.actions';
+
 const { TabPane } = Tabs;
 
-function App({ currentUser }) { 
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
-  const [selectedStations, setSelectedStations] = useState([]);
-
-  const [selectedRegionNames, setSelectedRegionsNames] = useState([]);
-  const [selectedRegions, setSelectedRegions] = useState([]);
-
-  const [tableVisability, setTableVisability] = useState(false);
-
-  const updateTable = newProductId => {
-    setTableVisability(true);
-    if(!selectedProductIds.includes(newProductId)) {
-      setSelectedProductIds([
-        ...selectedProductIds,
-        newProductId,
-      ]);
-    }
-  }
-
-  useEffect(async() => {
-    console.log({ currentUser });
-    setSelectedStations(
-      await ProductApi.getProductsByIds({
-        productIds: selectedProductIds,
-        currentUser,
-      }));
-    // setSelectedRegions(await getProductsByRegions(selectedRegionNames));
-  }, [selectedProductIds, selectedRegionNames]);
-
+function App() {
   const tabChange = () => {
     console.log('tab was changed');
   }
 
   return (
     <div className={styles.app}>
-      <TinyMap selectedStations={selectedStations} />
+      <TinyMap />
       <div className={styles.menu}>
         <Header />
         <Tabs defaultActiveKey="1" onChange={tabChange} style={{ margin: '0px'}}>
           <TabPane tab="По продуктам" key="1">
-            <ProductChoice
-              updateTable={updateTable}
-              tableVisability={tableVisability}
-              selectedStations={selectedStations}
-            />
+            <ProductChoice />
           </TabPane>
           <TabPane tab="По регионам" key="2">
             Content of Tab Pane 2
@@ -71,6 +42,12 @@ function App({ currentUser }) {
 
 const mapStateToProps = state => ({
   currentUser: UserSelector.getCurrentUser(state),
+
+  selectedProductIds: ProductSelector.getSelectedProductIds(state),
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+  pushSelectedProductIds: ProductActions.pushSelectedProductId,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,8 +1,11 @@
-import StationModel from "../storage/models/station.model.js";
-import DoneModel from "../storage/models/done.model.js";
 import { stationFieldsValidation } from "../validation/station-fields.validation.js";
 import { insertNewStation } from "../services/insert-new-station.service.js";
 import { putDone } from "../services/put-done.service.js";
+import {
+  getStationsPrepared,
+  getStationsByProductId,
+  getStationDone,
+} from "../services/get-stations.service.js";
 
 class StationController {
   createStation = async (req, res) => {
@@ -21,15 +24,23 @@ class StationController {
   getStationsByProductId = async (req, res) => {
     const { productId } = req.params;
 
-    const stationsByProductId = await StationModel.find({ productId });
+    const stationsByProductId = await getStationsByProductId({ productId });
 
     return res.send(stationsByProductId);
+  }
+
+  getStationsPrepared = async (req, res) => {
+    const { productId, userId } = req.params;
+
+    const stationsPrepared = await getStationsPrepared({ productId, userId });
+
+    return res.send(stationsPrepared);
   }
 
   getStationDone = async (req, res) => {
     const { stationId, userId } = req.params;
 
-    const stationDone = await DoneModel.findOne({ userId, stationId });
+    const stationDone = await getStationDone({ stationId, userId });
 
     return res.send({ stationDone });
   }

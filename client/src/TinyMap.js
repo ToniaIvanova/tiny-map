@@ -1,15 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import styles from './styles.module.css';
 import { colors, gray } from './constants/colors';
+import StationSelector from './resources/station/station.selector';
 
-export default function TinyMap({ selectedStations }) {
+function TinyMap({ selectedByProductStations }) {
   let k = 0;
-  let currentProduct = selectedStations[0] ? selectedStations[0].productName : '';
+  let currentProduct = selectedByProductStations[0] ? selectedByProductStations[0].productName : '';
 
   return <YMaps>
     <Map className={styles.map} defaultState={{ center:[19.441468, 17.496825], zoom: 2 }}>
-    { selectedStations.map(station => {
+    { selectedByProductStations.map(station => {
       const color = station.done ? gray : colors[k % colors.length];
       if (station.productName !== currentProduct) {
         k += 1;
@@ -35,3 +37,9 @@ export default function TinyMap({ selectedStations }) {
     </Map>
   </YMaps>
 }
+
+const mapStateToProps = state => ({
+  selectedByProductStations: StationSelector.setSelectedByProductStations(state),
+});
+
+export default connect(mapStateToProps)(TinyMap);
