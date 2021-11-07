@@ -40,14 +40,4 @@ function App() {
   );
 };
 
-const mapStateToProps = state => ({
-  currentUser: UserSelector.getCurrentUser(state),
-
-  selectedProductIds: ProductSelector.getSelectedProductIds(state),
-});
-
-const mapDispatchToProps = {
-  pushSelectedProductIds: ProductActions.pushSelectedProductId,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
