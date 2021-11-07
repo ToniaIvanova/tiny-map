@@ -4,7 +4,7 @@ import {
 
 const StationActions = {
   pushSelectedByProductStations: (productId, currentUser) => dispatch => 
-    fetch(`http://localhost:3001/station/product/${productId}/${currentUser._id}/prepared`, {
+    fetch(`http://localhost:3001/station/product/${productId}/${currentUser._id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
