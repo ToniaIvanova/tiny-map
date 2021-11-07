@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import ProductSearch from './ProductSearch';
 import ProductTable from './ProductTable';
 import styles from '../styles.module.css';
+import ProductSelector from '../resources/product/product.selector';
 
-export default function ProductChoice({ selectedStations, tableVisability, updateTable }) {
+function ProductChoice({ productTableVisability }) {
   return <div>
-      <ProductSearch updateTable={updateTable} />
-      { tableVisability && 
-        <ProductTable
-          className={styles.table}
-          stations={selectedStations}
-        /> }
-    </div>
-}
+    <ProductSearch />
+    { productTableVisability && 
+      <ProductTable
+        className={styles.table}
+      /> }
+  </div>
+};
+
+const mapStateToProps = state => ({
+  productTableVisability: ProductSelector.getProductTableVisibility(state),
+});
+
+export default connect(mapStateToProps)(ProductChoice);

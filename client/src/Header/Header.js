@@ -2,7 +2,7 @@ import React from 'react';
 import User from './User';
 import Logo from './Logo'
 
-export default function Header({ currentUser, changeCurrentUser }) {
+export default function Header() {
   return <div style={{ 
     width: '100%',
     height: '45px',
@@ -10,6 +10,6 @@ export default function Header({ currentUser, changeCurrentUser }) {
     display: 'flex',
   }}>
     <Logo />
-    <User currentUser={currentUser} changeCurrentUser={changeCurrentUser}/>
+    <User />
   </div>
 };

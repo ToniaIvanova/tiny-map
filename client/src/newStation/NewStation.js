@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Guest from '../constants/defaultUser';
 import { Form, Input, Button, Select, Switch, Typography } from 'antd';
 import StationApi from '../api/station.api';
+import UserSelector from '../resources/user/user.selector';
 
-export default function NewStation({ currentUser }){
+function NewStation({ currentUser }){
   
   const onFinish = async newStationData => {
     newStationData.userId = currentUser._id;
@@ -59,3 +61,9 @@ export default function NewStation({ currentUser }){
 
   </Form>
 };
+
+const mapStateToProps = state => ({
+  currentUser: UserSelector.getCurrentUser(state),
+});
+
+export default connect(mapStateToProps)(NewStation);
