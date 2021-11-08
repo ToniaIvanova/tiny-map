@@ -3,12 +3,16 @@ import DoneModel from "../storage/models/done.model.js";
 import ProductModel from "../storage/models/product.model.js";
 import RegionModel from "../storage/models/region.model.js";
 
-const getStationsByProductId = async ({ productId, userId }) => {
-  const stationsData = await StationModel.find({ productId });
-  const product = await ProductModel.findOne({ _id: productId });
+async function getPopulatedStationsByProduct(productId) {
+  return ProductModel.findOne({ _id: productId }).populate('stations');
+}
 
-  let stationsPrepared = [];
-  for (let station of stationsData) {
+const getStationsByProductId = async ({ productId, userId }) => {
+  const product = await ProductModel.findOne({ _id: productId });
+  const stationsData = (await getPopulatedStationsByProduct(productId)).stations;
+
+  const stationsPrepared = [];
+  for (const station of stationsData) {
     const region = await RegionModel.findOne({ _id: station.regionId });
     if (!region) {
       console.log({ station, product });
@@ -32,9 +36,13 @@ const getStationsByProductId = async ({ productId, userId }) => {
   return stationsPrepared;
 };
 
+async function getPopulatedStationsByRegion(regionId) {
+  return RegionModel.findOne({ _id: regionId }).populate('stations');
+}
+
 const getStationsByRegionId = async ({ regionId, userId }) => {
-  const stationsData = await StationModel.find({ regionId });
   const region = await RegionModel.findOne({ _id: regionId });
+  const stationsData = (await getPopulatedStationsByRegion(regionId)).stations;
 
   const stationsPrepared = [];
   for (const station of stationsData) {
