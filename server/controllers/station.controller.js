@@ -2,8 +2,8 @@ import { stationFieldsValidation } from "../validation/station-fields.validation
 import { insertNewStation } from "../services/insert-new-station.service.js";
 import { putDone } from "../services/put-done.service.js";
 import {
-  getStationsPrepared,
   getStationsByProductId,
+  getStationsByRegionId,
   getStationDone,
 } from "../services/get-stations.service.js";
 
@@ -22,19 +22,19 @@ class StationController {
   }
 
   getStationsByProductId = async (req, res) => {
-    const { productId } = req.params;
+    const { productId, userId } = req.params;
 
-    const stationsByProductId = await getStationsByProductId({ productId });
+    const stationsByProductId = await getStationsByProductId({ productId, userId });
 
     return res.send(stationsByProductId);
   }
+  
+  getStationsByRegionId = async (req, res) => {
+    const { regionId, userId } = req.params;
 
-  getStationsPrepared = async (req, res) => {
-    const { productId, userId } = req.params;
+    const stationsByRegionId = await getStationsByRegionId({ regionId, userId });
 
-    const stationsPrepared = await getStationsPrepared({ productId, userId });
-
-    return res.send(stationsPrepared);
+    return res.send(stationsByRegionId);
   }
 
   getStationDone = async (req, res) => {

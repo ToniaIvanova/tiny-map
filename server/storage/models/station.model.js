@@ -4,7 +4,7 @@ const StationSchema = new mongoose.Schema({
   name: String,
   productId: mongoose.Schema.ObjectId,
   needCount: Number,
-  region: String,
+  regionId: mongoose.Schema.ObjectId,
   place: [Number]
 }, { versionKey: false });
 

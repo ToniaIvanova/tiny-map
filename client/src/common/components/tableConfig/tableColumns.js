@@ -1,4 +1,4 @@
-import DoneSwitch from "./DoneSwitch";
+import StationDoneSwitch from "./StationDoneSwitch";
 
 const tableColumns = [
   {
@@ -23,7 +23,7 @@ const tableColumns = [
   },
   {
     title: 'Done',
-    render: station => <DoneSwitch station={station} />
+    render: station => <StationDoneSwitch station={station} />
   },
   {
     title: 'region',

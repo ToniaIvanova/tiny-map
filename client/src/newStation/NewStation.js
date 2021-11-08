@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Guest from '../constants/defaultUser';
+import Guest from '../common/constants/defaultUser';
 import { Form, Input, Button, Select, Switch, Typography } from 'antd';
 import StationApi from '../api/station.api';
 import UserSelector from '../resources/user/user.selector';
