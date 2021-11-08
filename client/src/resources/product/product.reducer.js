@@ -1,11 +1,13 @@
 import {
   SWITCH_ON_PRODUCT_TABLE_VISIBILITY,
   PUSH_SELECTED_PRODUCT_ID,
+  INC_PRODUCT_COLOR_INDEX,
 } from './product.types';
 
 const initialState = {
   productTableVisibility: false,
   selectedProductIds: [],
+  nextProductColorIndex: 0,
 }
 
 const productReducer = (state = initialState, action) => {
@@ -23,6 +25,12 @@ const productReducer = (state = initialState, action) => {
           ...state.selectedProductIds,
           action.productId,
         ]
+      };
+    
+    case INC_PRODUCT_COLOR_INDEX:
+      return {
+        ...state,
+        nextProductColorIndex: action.colorIndex,
       }
     default: 
       return state;

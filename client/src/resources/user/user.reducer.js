@@ -1,4 +1,4 @@
-import Guest from "../../constants/defaultUser";
+import Guest from "../../common/constants/defaultUser";
 import { SET_CURRENT_USER } from "./user.types";
 
 const initialState = {

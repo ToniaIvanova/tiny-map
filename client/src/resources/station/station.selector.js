@@ -1,5 +1,6 @@
 const StationSelector = {
-  setSelectedByProductStations: state => state.station.selectedByProductStations,
+  getSelectedByProductStations: state => state.station.selectedByProductStations,
+  getSelectedByRegionStations: state => state.station.selectedByRegionStations,
 };
 
 export default StationSelector;

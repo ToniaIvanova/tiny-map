@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
-import './index.css';
+import '../common/components/tableConfig/table.css';
 import { Input, AutoComplete } from 'antd';
 import ProductApi from '../api/product.api';
 import ProductActions from '../resources/product/product.actions';
@@ -12,6 +12,8 @@ import StationActions from '../resources/station/station.actions';
 function ProductSearch({
   selectedProductIds,
   currentUser,
+  nextProductColor,
+  incNextProductColor,
   switchOnProductTableVisibility,
   pushSelectedProductIds,
   pushSelectedByProductStations,
@@ -34,9 +36,10 @@ function ProductSearch({
 
   const onSelect = productId => {
     if (productId && !selectedProductIds.includes(productId)) {
-      pushSelectedByProductStations(productId, currentUser);
+      pushSelectedByProductStations(productId, currentUser, nextProductColor);
       switchOnProductTableVisibility();
       pushSelectedProductIds(productId);
+      incNextProductColor(nextProductColor);
     }
   };
 
@@ -66,6 +69,7 @@ function ProductSearch({
 
 const mapStateToProps = state => ({
   selectedProductIds: ProductSelector.getSelectedProductIds(state),
+  nextProductColor: ProductSelector.getNextProductColorIndex(state),
 
   currentUser: UserSelector.getCurrentUser(state),
 });
@@ -73,6 +77,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   switchOnProductTableVisibility: ProductActions.switchOnProductTableVisibility,
   pushSelectedProductIds: ProductActions.pushSelectedProductId,
+  incNextProductColor: ProductActions.incProductColorIndex,
 
   pushSelectedByProductStations: StationActions.pushSelectedByProductStations,
 };

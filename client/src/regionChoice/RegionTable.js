@@ -5,16 +5,16 @@ import 'antd/dist/antd.css';
 import { Table } from 'antd';
 import tableColumns from '../common/components/tableConfig/tableColumns';
 
-function ProductTable({ selectedByProductStations }) {
+function RegionTable({ selectedByRegionStations }) {
   return <Table
     columns={tableColumns}
-    dataSource={selectedByProductStations}
+    dataSource={selectedByRegionStations}
     size="middle"
   />;
 }
 
 const mapStateToProps = state => ({
-  selectedByProductStations: StationSelector.getSelectedByProductStations(state),
+  selectedByRegionStations: StationSelector.getSelectedByRegionStations(state),
 });
 
-export default connect(mapStateToProps)(ProductTable);
+export default connect(mapStateToProps)(RegionTable);

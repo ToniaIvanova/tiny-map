@@ -3,7 +3,7 @@ import { insertNewStation } from "../services/insert-new-station.service.js";
 import { putDone } from "../services/put-done.service.js";
 import {
   getStationsByProductId,
-  getStationsByRegion,
+  getStationsByRegionId,
   getStationDone,
 } from "../services/get-stations.service.js";
 
@@ -29,12 +29,12 @@ class StationController {
     return res.send(stationsByProductId);
   }
   
-  getStationsByRegion = async (req, res) => {
-    const { productId, userId } = req.params;
+  getStationsByRegionId = async (req, res) => {
+    const { regionId, userId } = req.params;
 
-    const stationsByProductId = await getStationsByRegion({ productId, userId });
+    const stationsByRegionId = await getStationsByRegionId({ regionId, userId });
 
-    return res.send(stationsByProductId);
+    return res.send(stationsByRegionId);
   }
 
   getStationDone = async (req, res) => {

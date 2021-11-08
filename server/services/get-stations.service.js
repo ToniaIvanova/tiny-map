@@ -1,6 +1,7 @@
 import StationModel from "../storage/models/station.model.js";
 import DoneModel from "../storage/models/done.model.js";
 import ProductModel from "../storage/models/product.model.js";
+import RegionModel from "../storage/models/region.model.js";
 
 const getStationsByProductId = async ({ productId, userId }) => {
   const stationsData = await StationModel.find({ productId });
@@ -8,6 +9,11 @@ const getStationsByProductId = async ({ productId, userId }) => {
 
   let stationsPrepared = [];
   for (let station of stationsData) {
+    const region = await RegionModel.findOne({ _id: station.regionId });
+    if (!region) {
+      console.log({ station, product });
+    }
+
     const stationDone = await getStationDone({ userId, stationId: station._id });
     const done = stationDone ? stationDone.done : false;
 
@@ -19,18 +25,19 @@ const getStationsByProductId = async ({ productId, userId }) => {
       place: station.place,
       needCount: station.needCount,
       done,
-      region: station.region,
+      region: region.name,
     })
   };
 
   return stationsPrepared;
 };
 
-const getStationsByRegion = async ({ region, userId }) => {
-  const stationsData = await StationModel.find({ region });
+const getStationsByRegionId = async ({ regionId, userId }) => {
+  const stationsData = await StationModel.find({ regionId });
+  const region = await RegionModel.findOne({ _id: regionId });
 
-  let stationsPrepared = [];
-  for (let station of stationsData) {
+  const stationsPrepared = [];
+  for (const station of stationsData) {
     const product = await ProductModel.findOne({ _id: station.productId });
 
     const stationDone = await getStationDone({ userId, stationId: station._id });
@@ -44,7 +51,7 @@ const getStationsByRegion = async ({ region, userId }) => {
       place: station.place,
       needCount: station.needCount,
       done,
-      region,
+      region: region.name,
     })
   };
   
@@ -57,6 +64,6 @@ const getStationDone = async ({ userId, stationId }) => {
 
 export {
   getStationsByProductId,
-  getStationsByRegion,
+  getStationsByRegionId,
   getStationDone,
 };

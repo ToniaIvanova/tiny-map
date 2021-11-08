@@ -1,8 +1,8 @@
 import { Switch } from "antd";
 import { connect } from 'react-redux';
-import UserSelector from '../resources/user/user.selector';
-import StationApi from '../api/station.api';
-import Guest from "../constants/defaultUser";
+import UserSelector from '../../../resources/user/user.selector';
+import StationApi from '../../../api/station.api';
+import Guest from "../../constants/defaultUser";
 
 function DoneSwitch({ station, currentUser }) {
   function onChange(checked) {
