@@ -2,10 +2,11 @@ import {
   PUSH_SELECTED_BY_PRODUCT_STATIONS,
   PUSH_SELECTED_BY_REGION_STATIONS,
 } from './station.types';
+import { BASE_URL } from '../../common/constants/baseURL';
 
 const StationActions = {
   pushSelectedByProductStations: (productId, currentUser, colorForMap) => dispatch => 
-    fetch(`http://localhost:3001/station/product/${productId}/${currentUser._id}`, {
+    fetch(`${BASE_URL}/station/product/${productId}/${currentUser._id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -19,7 +20,7 @@ const StationActions = {
     })),
 
   pushSelectedByRegionStations: (regionId, currentUser, colorForMap) => dispatch => 
-    fetch(`http://localhost:3001/station/region/${regionId}/${currentUser._id}`, {
+    fetch(`${BASE_URL}/station/region/${regionId}/${currentUser._id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })

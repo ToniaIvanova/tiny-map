@@ -1,8 +1,9 @@
 import { SET_CURRENT_USER } from './user.types';
+import { BASE_URL } from '../../common/constants/baseURL';
 
 const UserActions = {
   setCurrentUser: id => dispatch => 
-    fetch(`http://localhost:3001/user/${id}`, {
+    fetch(`${BASE_URL}/user/${id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
