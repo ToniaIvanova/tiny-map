@@ -2,9 +2,15 @@ import mongoose from 'mongoose';
 
 const StationSchema = new mongoose.Schema({
   name: String,
-  productId: mongoose.Schema.ObjectId,
+  productId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Product',
+  },
   needCount: Number,
-  regionId: mongoose.Schema.ObjectId,
+  regionId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Region',
+  },
   place: [Number]
 }, { versionKey: false });
 
