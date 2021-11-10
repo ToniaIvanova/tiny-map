@@ -7,6 +7,7 @@ import store from './resources/store';
 ReactDOM.render(
   <Provider store={store}>
     <App />
+    <style>{'#root {width: 100%} '}</style>
   </Provider>,
   document.getElementById('root')
 );

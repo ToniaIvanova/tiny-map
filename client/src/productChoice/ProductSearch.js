@@ -22,16 +22,19 @@ function ProductSearch({
   const [allProducts, setAllProducts] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
 
-  useEffect(async() => {
-    const productsData = await ProductApi.getAllProducts();
-    const productsForSearch = productsData.data.map(product => {
-      return {
-        value: product._id,
-        label: product.name,
-      }
-    });
-    setAllProducts(productsForSearch);
-    setProductsInSearch(productsForSearch);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productsData = await ProductApi.getAllProducts();
+      const productsForSearch = productsData.data.map(product => {
+        return {
+          value: product._id,
+          label: product.name,
+        }
+      });
+      setAllProducts(productsForSearch);
+      setProductsInSearch(productsForSearch);
+    };
+    fetchProducts();
   }, []);
 
   const onSelect = productId => {

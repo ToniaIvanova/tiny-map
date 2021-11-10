@@ -22,16 +22,19 @@ function RegionSearch({
   const [allRegions, setAllRegions] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
 
-  useEffect(async() => {
-    const regionsData = await RegionApi.getAllRegions();
-    const regionsForSearch = regionsData.data.map(region => {
-      return {
-        value: region._id,
-        label: region.name,
-      }
-    });
-    setAllRegions(regionsForSearch);
-    setRegionsInSearch(regionsForSearch);
+  useEffect(() => {
+    const fetchRegions = async () => {
+      const regionsData = await RegionApi.getAllRegions();
+      const regionsForSearch = regionsData.data.map(region => {
+        return {
+          value: region._id,
+          label: region.name,
+        }
+      });
+      setAllRegions(regionsForSearch);
+      setRegionsInSearch(regionsForSearch);
+    }
+    fetchRegions();
   }, []);
 
   const onSelect = regionId => {
