@@ -5,6 +5,7 @@ import UserActions from '../resources/user/user.actions';
 import UserSelector from '../resources/user/user.selector';
 
 function User({ currentUser, setCurrentUser }) {
+
   const changeUser = () => {
     setCurrentUser('60e06fe6ad2cc121d81eb19a'); // Тонечка
   };
@@ -28,7 +29,6 @@ function User({ currentUser, setCurrentUser }) {
       }}>
         {currentUser ? currentUser.name : 'Гость'}
     </Avatar>
-    
   </div>
 };
 

@@ -1,14 +1,15 @@
-import { SET_CURRENT_USER } from './user.types';
-import { BASE_URL } from '../../common/constants/baseURL';
+import { SET_CURRENT_USER, LOG_IN } from './user.types';
+import api from '../../api/base.api';
 
 const UserActions = {
   setCurrentUser: id => dispatch => 
-    fetch(`${BASE_URL}/user/${id}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then(response => response.json())
-    .then(currentUser => dispatch({ type: SET_CURRENT_USER, currentUser })),
+    api.get(`/user/${id}`)
+      .then(currentUser => dispatch({ type: SET_CURRENT_USER, currentUser })),
+
+  logIn: (username, password) => dispatch =>
+    api.post(`/user/login`, { username, password })
+      .then(response => response.data)
+      .then(currentUser => dispatch({ type: LOG_IN, currentUser })),
 };
 
 export default UserActions;

@@ -1,50 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Tabs } from 'antd';
 import styles from './styles.module.css';
-import { 
-  PRODUCT_TAB,
-  REGION_TAB,
-  CREATE_STATION_TAB,
-} from './common/constants/tabs';
 import TinyMap from './map/TinyMap';
-import ProductChoice from './productChoice/ProductChoice';
-import RegionChoice from './regionChoice/RegionChoice';
-import NewStation from './newStation/NewStation';
-import Header from './Header/Header';
 
-import TabActions from './resources/tab/tab.actions';
+import {
+  Routes,
+  Route,
+} from "react-router";
+import {
+  BrowserRouter as Router,
+  Navigate,
+} from "react-router-dom";
+import UserSelector from './resources/user/user.selector';
+import MainMenu from './MainMenu/MainMenu';
+import LogIn from './LogIn/LogIn';
 
-const { TabPane } = Tabs;
-
-function App({ changeActiveTab }) {
-  const tabChange = (key) => {
-    changeActiveTab(key);
-  };
-
+function App({ currentUser }) {
   return (
     <div className={styles.app}>
       <TinyMap />
       <div className={styles.menu}>
-        <Header />
-        <Tabs defaultActiveKey="1" onChange={tabChange} style={{ margin: '0px'}}>
-          <TabPane tab="По продуктам" key={PRODUCT_TAB}>
-            <ProductChoice />
-          </TabPane>
-          <TabPane tab="По регионам" key={REGION_TAB}>
-            <RegionChoice />
-          </TabPane>
-          <TabPane tab="Добавить новую станцию" key={CREATE_STATION_TAB}>
-            <NewStation/>
-          </TabPane>
-        </Tabs>
+        {currentUser ?
+          (<Router>
+            <Routes>
+              <Route path="/" element={<MainMenu />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Router>)
+          : (<Router>
+            <Routes>
+              <Route path="/login" element={<LogIn />} />
+              <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+          </Router>)
+        }
+        
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = {
-  changeActiveTab: TabActions.changeActiveTab,
-};
+const mapStateToProps = state => ({
+  currentUser: UserSelector.getCurrentUser(state),
+});
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

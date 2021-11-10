@@ -1,18 +1,17 @@
-import Guest from "../../common/constants/defaultUser";
-import { SET_CURRENT_USER } from "./user.types";
+import { LOG_IN, SET_CURRENT_USER } from "./user.types";
 
 const initialState = {
-  currentUser: Guest,
+  currentUser: null,
 }
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER: {
+    case LOG_IN:
+    case SET_CURRENT_USER:
       return {
         ...state,
         currentUser: action.currentUser,
       };
-    }
     default: 
       return state;
   }
