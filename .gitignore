@@ -2,3 +2,4 @@ node_modules
 /server/.env
 /server/downloaded-base
 *.exe
+*/stormy-brook-68283
