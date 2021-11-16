@@ -1,0 +1,12 @@
+.ant-select-item, .ant-pagination-item {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.ant-btn {
+  border: none;
+}
+
+.ant-avatar {
+  background-color: #1890ff;
+  vertical-align: middle;
+}

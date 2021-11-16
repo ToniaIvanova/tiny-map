@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './styles.module.css';
-import TinyMap from './map/TinyMap';
+import styles from './App.module.css';
+import TinyMap from './TinyMap/TinyMap';
+import Header from './Header/Header';
+import 'antd/dist/antd.css';
+import './common/common.css';
 
 import {
   Routes,
@@ -20,6 +23,7 @@ function App({ currentUser }) {
     <div className={styles.app}>
       <TinyMap />
       <div className={styles.menu}>
+        <Header />
         {currentUser ?
           (<Router>
             <Routes>

@@ -12,8 +12,7 @@ To deploy client to firebase:
 cd client
 npm run-script build
 ```
-Then replace public/static to build/static, add 3 scripts from build/index.html to public/index.html and run:
+Then replace public/static to build/static, add scripts from build/index.html to public/index.html and run:
 ```cmd
-.\firebase-tools-instant-win.exe
 firebase deploy
 ```

@@ -4,7 +4,6 @@ import { putDone } from "../services/put-done.service.js";
 import {
   getStationsByProductId,
   getStationsByRegionId,
-  getStationDone,
 } from "../services/get-stations.service.js";
 
 class StationController {
@@ -37,20 +36,12 @@ class StationController {
     return res.send(stationsByRegionId);
   }
 
-  getStationDone = async (req, res) => {
-    const { stationId, userId } = req.params;
-
-    const stationDone = await getStationDone({ stationId, userId });
-
-    return res.send({ stationDone });
-  }
-
   putStationDone = async (req, res) => {
     const { stationId, userId } = req.params;
     const { done } = req.body;
 
     await putDone({ stationId, userId, done });
-  
+
     return res.send({});
   }
 }
