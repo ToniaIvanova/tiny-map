@@ -1,20 +1,17 @@
-import mongoose from "mongoose";
-import DoneModel from "../storage/models/done.model.js";
+import UserModel from "../storage/models/user.model.js";
 
 async function putDone({ stationId, userId, done }) {
-  const stationDone = await DoneModel.findOne({ userId, stationId });
+  const user = await UserModel.findOne({ _id: userId });
 
-  if (!stationDone) {
-    const newStationDone = new DoneModel({
-      _id: new mongoose.Types.ObjectId(),
-      userId,
-      stationId,
-      done,
-    });
-    newStationDone.save();
-  } else {
-    await DoneModel.updateOne({ userId, stationId }, { done });
+  const doneIndex = user.doneStations.indexOf(stationId);
+  if (doneIndex === -1 && done){
+    user.doneStations.push(stationId);
+  };
+
+  if (doneIndex !== -1 && !done){
+    user.doneStations.splice(doneIndex, 1);
   }
+  user.save();
 
   return {};
 }

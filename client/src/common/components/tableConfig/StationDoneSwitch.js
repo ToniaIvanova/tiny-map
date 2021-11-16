@@ -1,19 +1,18 @@
 import { Switch } from "antd";
 import { connect } from 'react-redux';
 import UserSelector from '../../../resources/user/user.selector';
-import StationApi from '../../../api/station.api';
-import Guest from "../../constants/defaultUser";
+import StationActions from "../../../resources/station/station.actions";
 
-function DoneSwitch({ station, currentUser }) {
+function DoneSwitch({ station, currentUser, updateStationDone }) {
   function onChange(checked) {
-    StationApi.putStationDone({
+    updateStationDone({
       stationId: station.stationId,
       currentUser,
       done: checked,
     });
   }
 
-  if (currentUser === Guest) {
+  if (!currentUser) {
     return <div></div>
   }
   if (station.done) {
@@ -26,4 +25,8 @@ const mapStateToProps = state => ({
   currentUser: UserSelector.getCurrentUser(state),
 });
 
-export default connect(mapStateToProps)(DoneSwitch);
+const mapDispatchToProps = {
+  updateStationDone: StationActions.updateStationDone,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DoneSwitch);

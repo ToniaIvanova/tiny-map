@@ -14,6 +14,12 @@ const tableColumns = [
   {
     title: 'Station Name',
     dataIndex: 'stationName',
+    sorter: (a, b) => {
+      if (a.stationName > b.stationName) {
+        return 1;
+      }
+      return -1;
+    },
   },
   {
     title: 'Need Count',

@@ -2,10 +2,14 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './LogIn.module.css';
 import UserActions from '../resources/user/user.actions';
+import ProductActions from '../resources/product/product.actions';
+import RegionActions from '../resources/region/region.actions';
 
-const LogIn = ({ logIn }) => {
+const LogIn = ({ logIn, getAllProducts, getAllRegions }) => {
   const onFinish = ({ username, password }) => {
     logIn(username, password);
+    getAllProducts();
+    getAllRegions();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -76,6 +80,10 @@ const LogIn = ({ logIn }) => {
 
 const mapDispatchToProps = {
   logIn: UserActions.logIn,
+
+  getAllProducts: ProductActions.getAllProducts,
+
+  getAllRegions: RegionActions.getAllRegions,
 }
 
 export default connect(null, mapDispatchToProps)(LogIn);

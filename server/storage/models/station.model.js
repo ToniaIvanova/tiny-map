@@ -5,7 +5,9 @@ const StationSchema = new mongoose.Schema({
   productId: mongoose.Schema.ObjectId,
   needCount: Number,
   regionId: mongoose.Schema.ObjectId,
-  place: [Number]
+  place: [Number],
+  productName: String,
+  regionName: String,
 }, { versionKey: false });
 
 const StationModel = mongoose.model('Station', StationSchema, 'station');

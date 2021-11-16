@@ -1,10 +1,6 @@
 import React from 'react';
+import styles from './Header.module.css';
 
 export default function Logo() {
-  return <h1 style={{
-    color: '#2B90EE',
-    height: '100%',
-    width: '30%',
-    float: 'left',
-  }}> Tiny-map </h1>
+  return <h2 className={styles.logo}> Tiny-Map </h2>
 }

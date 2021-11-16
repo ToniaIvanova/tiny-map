@@ -3,30 +3,22 @@ import { connect } from 'react-redux';
 import { Avatar, Button } from 'antd';
 import UserActions from '../resources/user/user.actions';
 import UserSelector from '../resources/user/user.selector';
+import styles from './Header.module.css';
 
 function User({ currentUser, setCurrentUser }) {
 
   const changeUser = () => {
-    setCurrentUser('60e06fe6ad2cc121d81eb19a'); // Тонечка
+    // setCurrentUser('60e06fe6ad2cc121d81eb19a'); // Тонечка
   };
 
-  return <div style={{
-      display: 'inline-block',
-      'flexFlow': 'column wrap',
-      float: 'right',
-    }}>
-    <Button size="small" onClick={changeUser}
-      style={{
-        verticalAlign: 'middle',
-        margin: '5px',
-        border: 'none',
-      }}>
+  return <div className={styles.user}>
+    <Button
+      size="small"
+      onClick={changeUser}
+      className={styles['user-button']}>
       Сменить власть
     </Button>
-    <Avatar size={50} style={{
-        backgroundColor: '#1890ff',
-        verticalAlign: 'middle'
-      }}>
+    <Avatar size={50} className={styles.avatar}>
         {currentUser ? currentUser.name : 'Гость'}
     </Avatar>
   </div>

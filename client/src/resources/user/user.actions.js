@@ -1,9 +1,10 @@
 import { SET_CURRENT_USER, LOG_IN } from './user.types';
-import api from '../../api/base.api';
+import api from '../../common/base.api';
 
 const UserActions = {
   setCurrentUser: id => dispatch => 
     api.get(`/user/${id}`)
+      .then(response => response.data)
       .then(currentUser => dispatch({ type: SET_CURRENT_USER, currentUser })),
 
   logIn: (username, password) => dispatch =>

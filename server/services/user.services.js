@@ -3,7 +3,10 @@ import UserModel from "../storage/models/user.model.js";
 
 class UserServices {
   getById = async id => {
-    return UserModel.findOne({ _id: id });
+    return UserModel.aggregate([
+      { $match: { _id: id } },
+      { $project: { _id: 1, name: 1 } }
+    ]);
   }
 
   resetPassword = async (name, password) => {

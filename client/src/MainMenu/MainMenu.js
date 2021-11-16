@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Tabs } from 'antd';
+import styles from './MainMenu.module.css';
 import {
   PRODUCT_TAB,
   REGION_TAB,
   CREATE_STATION_TAB,
 } from '../common/constants/tabs';
-import ProductChoice from '../productChoice/ProductChoice';
-import RegionChoice from '../regionChoice/RegionChoice';
-import NewStation from '../newStation/NewStation';
-import Header from '../Header/Header';
+import ProductChoice from './ProductChoice/ProductChoice';
+import RegionChoice from './RegionChoice/RegionChoice';
+import NewStation from './NewStation/NewStation';
 import TabActions from '../resources/tab/tab.actions';
 
 const { TabPane } = Tabs;
@@ -20,8 +20,7 @@ function MainMenu({ changeActiveTab }) {
   };
 
   return <div>
-    <Header />
-    <Tabs defaultActiveKey="1" onChange={tabChange} style={{ margin: '0px' }}>
+    <Tabs defaultActiveKey="1" onChange={tabChange} className={styles.tabs}>
       <TabPane tab="По продуктам" key={PRODUCT_TAB}>
         <ProductChoice />
       </TabPane>

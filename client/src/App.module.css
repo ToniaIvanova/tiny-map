@@ -1,0 +1,23 @@
+body, html {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.menu {
+  margin: 10px;
+  width: 50%;
+}
+
+.username {
+  text-align: center;
+}
