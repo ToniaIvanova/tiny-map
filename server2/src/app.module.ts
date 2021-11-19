@@ -5,7 +5,6 @@ import { RegionModule } from './region/region.module';
 import { StationModule } from './station/station.module';
 import { UserModule } from './user/user.module';
 import { EnvModule } from './env.module';
-
 const { DB_URI } = process.env;
 
 @Module({
