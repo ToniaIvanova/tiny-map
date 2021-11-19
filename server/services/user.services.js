@@ -1,4 +1,4 @@
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import UserModel from "../storage/models/user.model.js";
 
 class UserServices {
