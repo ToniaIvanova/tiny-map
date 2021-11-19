@@ -44,10 +44,10 @@ export default StationReducer;
 function updateStationDone(state, action) {
   const newProdStations = [];
   for (const station of state.selectedByProductStations) {
-    if (station.stationId === action.stationsData.stationId) {
+    if (station.stationId === action.stationData.stationId) {
       newProdStations.push({
         ...station,
-        done: action.stationsData.done,
+        done: action.stationData.done,
       });
     } else {
       newProdStations.push(station);
@@ -56,10 +56,10 @@ function updateStationDone(state, action) {
 
   const newRegStations = [];
   for (const station of state.selectedByRegionStations) {
-    if (station.stationId === action.stationsData.stationId) {
+    if (station.stationId === action.stationData.stationId) {
       newRegStations.push({
         ...station,
-        done: action.stationsData.done,
+        done: action.stationData.done,
       });
     } else {
       newRegStations.push(station);
