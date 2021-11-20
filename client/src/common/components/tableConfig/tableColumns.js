@@ -2,7 +2,7 @@ import StationDoneSwitch from "./StationDoneSwitch";
 
 const tableColumns = [
   {
-    title: 'Product Name',
+    title: 'Продукт',
     dataIndex: 'productName',
     sorter: (a, b) => {
       if (a.productName > b.productName) {
@@ -12,7 +12,7 @@ const tableColumns = [
     },
   },
   {
-    title: 'Station Name',
+    title: 'Станция',
     dataIndex: 'stationName',
     sorter: (a, b) => {
       if (a.stationName > b.stationName) {
@@ -22,18 +22,29 @@ const tableColumns = [
     },
   },
   {
-    title: 'Need Count',
+    title: 'Нужно',
     dataIndex: 'needCount',
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.needCount - b.needCount,
   },
   {
-    title: 'Done',
-    render: station => <StationDoneSwitch station={station} />
+    title: 'Выполнено',
+    render: station => <StationDoneSwitch station={station} />,
+    filters: [
+      {
+        text: 'Done',
+        value: true,
+      },
+      {
+        text: 'Not Done',
+        value: false,
+      },
+    ],
+    onFilter: (value, station) => station.done === value,
   },
   {
-    title: 'region',
-    dataIndex: 'region',
+    title: 'Регион',
+    dataIndex: 'regionName',
     sorter: (a, b) => {
       if (a.region > b.region) {
         return 1;

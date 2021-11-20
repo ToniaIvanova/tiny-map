@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Input, AutoComplete } from 'antd';
+import { Select, Tag } from 'antd';
 import styles from './RegionChoice.module.css';
+
+import { getColor } from '../../common/getColor';
 
 import RegionActions from '../../resources/region/region.actions';
 import RegionSelector from '../../resources/region/region.selector';
@@ -10,62 +12,72 @@ import StationActions from '../../resources/station/station.actions';
 
 function RegionSearch({
   selectedRegionIds,
-  currentUser,
   nextRegionColor,
   allRegionsData,
-  incRegionColorIndex,
+  currentUser,
+
   switchOnRegionTableVisibility,
-  pushSelectedRegionIds,
+  pushSelectedRegionId,
+  deleteSelectedRegionId,
   pushSelectedByRegionStations,
+  deleteSelectedByRegionStations,
 }) {
   const [regionsInSearch, setRegionsInSearch] = useState([]);
-  const [allRegions, setAllRegions] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
-    const fetchRegions = async () => {
-      const regionsForSearch = allRegionsData.map(region => {
-        return {
-          value: region._id,
-          label: region.name,
-        }
-      });
-      setAllRegions(regionsForSearch);
-      setRegionsInSearch(regionsForSearch);
-    }
-    fetchRegions();
+    const regionsForSearch = allRegionsData.map(region => ({
+      value: region._id,
+      label: region.name,
+    }));
+    setRegionsInSearch(regionsForSearch);
   }, [allRegionsData]);
 
   const onSelect = regionId => {
     if (regionId && !selectedRegionIds.includes(regionId)) {
-      pushSelectedByRegionStations(regionId, currentUser, nextRegionColor);
+      pushSelectedRegionId(regionId);
+      pushSelectedByRegionStations(regionId, currentUser);
       switchOnRegionTableVisibility();
-      pushSelectedRegionIds(regionId);
-      incRegionColorIndex(nextRegionColor);
     }
   };
+  
+  const onDeselect = regionId => {
+    deleteSelectedRegionId(regionId);
+    const regionForDelete = allRegionsData.find(region => region._id === regionId);
+    deleteSelectedByRegionStations(regionForDelete);
+  }
 
-  const onSearch = regionName => {
-    setSelectedValue(regionName);
-    const newRegions = allRegions.filter((region) => 
-      region.label.toString().toLowerCase().indexOf(regionName.toString().toLowerCase()) > -1
+  const tagRender = (props) => {
+    const { label, closable, onClose, value } = props;
+    const onPreventMouseDown = event => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const color = getColor(selectedRegionIds, value);
+    return (
+      <Tag
+        color={color}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
     );
-    setRegionsInSearch(newRegions);
-  };
+  }
 
   return <div className={styles.search}>
-    <AutoComplete
-      dropdownMatchSelectWidth={252}
-      style={{
-        width: 300,
-      }}
+    <Select
+      mode="multiple"
+      size="large"
+      showArrow
+      style={{ width: '100%' }}
+      placeholder="выберете регион"
+      tagRender={tagRender}
       options={regionsInSearch}
       onSelect={onSelect}
-      onSearch={onSearch}
-      value={selectedValue}
-    >
-      <Input.Search size="large" placeholder="название региона" enterButton />
-    </AutoComplete>
+      onDeselect={onDeselect}
+    />
   </div>
 };
 
@@ -79,10 +91,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   switchOnRegionTableVisibility: RegionActions.switchOnRegionTableVisibility,
-  pushSelectedRegionIds: RegionActions.pushSelectedRegionId,
-  incRegionColorIndex: RegionActions.incRegionColorIndex,
+  pushSelectedRegionId: RegionActions.pushSelectedRegionId,
+  deleteSelectedRegionId: RegionActions.deleteSelectedRegionId,
 
   pushSelectedByRegionStations: StationActions.pushSelectedByRegionStations,
+  deleteSelectedByRegionStations: StationActions.deleteSelectedByRegionStations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegionSearch)

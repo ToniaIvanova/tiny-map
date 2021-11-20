@@ -78,14 +78,16 @@ export class StationService {
       const done: boolean = user.doneStations.includes(stationId);
 
       stationsPrepared.push({
+        stationName: station.name,
         stationId,
         key: stationId,
         productName: station.productName,
-        stationName: station.name,
+        productId: station.productId,
+        regionName: station.regionName,
+        regionId: station.regionId,
         place: station.place,
         needCount: station.needCount,
         done,
-        region: station.regionName,
       });
     }
 

@@ -1,14 +1,15 @@
 import {
   SWITCH_ON_PRODUCT_TABLE_VISIBILITY,
   PUSH_SELECTED_PRODUCT_ID,
-  INC_PRODUCT_COLOR_INDEX,
+  DELETE_SELECTED_PRODUCT_ID,
   GET_ALL_PRODUCTS,
 } from './product.types';
+import { colors } from '../../common/constants/colors';
 
 const initialState = {
   productTableVisibility: false,
   selectedProductIds: [],
-  nextProductColorIndex: 0,
+  freeColors: [...colors],
   allProducts: [],
 }
 
@@ -25,20 +26,37 @@ const productReducer = (state = initialState, action) => {
         productTableVisibility: true,
       };
     
-    case PUSH_SELECTED_PRODUCT_ID: 
+    case PUSH_SELECTED_PRODUCT_ID: {
+      const color = state.freeColors.pop();
       return {
         ...state,
         selectedProductIds: [
           ...state.selectedProductIds,
-          action.productId,
+          {
+            productId: action.productId,
+            color,
+          }
         ]
       };
+    }
     
-    case INC_PRODUCT_COLOR_INDEX:
+    case DELETE_SELECTED_PRODUCT_ID: {
+      const newSelectedProductIds = state.selectedProductIds;
+      const newFreeColors = state.freeColors;
+
+      const indexForDelete = state.selectedProductIds.findIndex(productData => {
+        return productData.productId === action.productId;
+      });
+      const productForDelete = newSelectedProductIds.splice(indexForDelete, 1);
+      newFreeColors.push(productForDelete[0].color);
+
       return {
         ...state,
-        nextProductColorIndex: action.colorIndex,
-      }
+        selectedProductIds: newSelectedProductIds,
+        freeColors: newFreeColors,
+      };
+    }
+
     default: 
       return state;
   }

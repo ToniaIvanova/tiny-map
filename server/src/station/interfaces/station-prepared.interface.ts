@@ -1,11 +1,13 @@
 import { Types } from 'mongoose';
 
 export class StationPrepared {
+  stationName: string;
   stationId: Types.ObjectId;
   key: Types.ObjectId;
-  stationName: string;
   productName: string;
-  region: string;
+  productId: Types.ObjectId;
+  regionName: string;
+  regionId: Types.ObjectId;
   needCount: number;
   place: number[];
   done: boolean;

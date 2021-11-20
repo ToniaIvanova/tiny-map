@@ -2,7 +2,7 @@ import api from '../../common/base.api';
 import {
   SWITCH_ON_PRODUCT_TABLE_VISIBILITY,
   PUSH_SELECTED_PRODUCT_ID,
-  INC_PRODUCT_COLOR_INDEX,
+  DELETE_SELECTED_PRODUCT_ID,
   GET_ALL_PRODUCTS,
 } from './product.types';
 
@@ -13,9 +13,15 @@ const ProductActions = {
     api.get('/product').then(response => response.data)
     .then(products => dispatch({ type: GET_ALL_PRODUCTS, products })),
 
-  pushSelectedProductId: productId => dispatch => dispatch({ type: PUSH_SELECTED_PRODUCT_ID, productId}),
+  pushSelectedProductId: productId => dispatch => dispatch({
+    type: PUSH_SELECTED_PRODUCT_ID,
+    productId,
+  }),
 
-  incProductColorIndex: predIndex => dispatch => dispatch({ type: INC_PRODUCT_COLOR_INDEX, colorIndex: predIndex + 1 })
+  deleteSelectedProductId: productId => dispatch => dispatch({
+    type: DELETE_SELECTED_PRODUCT_ID,
+    productId,
+  })
 };
 
 export default ProductActions;

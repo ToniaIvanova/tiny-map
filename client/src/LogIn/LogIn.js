@@ -7,8 +7,7 @@ import RegionActions from '../resources/region/region.actions';
 
 const LogIn = ({ logIn, getAllProducts, getAllRegions }) => {
   const onFinish = ({ username, password }) => {
-    logIn('Тонечка', 'helloWorld');
-    // logIn(username, password);
+    logIn(username, password);
     getAllProducts();
     getAllRegions();
   };
@@ -32,7 +31,7 @@ const LogIn = ({ logIn, getAllProducts, getAllRegions }) => {
         name="username"
         rules={[
           {
-            required: false,
+            required: true,
             message: 'Введите имя пользователя',
           },
         ]}
@@ -45,7 +44,7 @@ const LogIn = ({ logIn, getAllProducts, getAllRegions }) => {
         name="password"
         rules={[
           {
-            required: false,
+            required: true,
             message: 'Введите пароль',
           },
         ]}

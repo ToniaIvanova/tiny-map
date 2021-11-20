@@ -2,6 +2,8 @@ import {
   CREATE_STATION,
   PUSH_SELECTED_BY_PRODUCT_STATIONS,
   PUSH_SELECTED_BY_REGION_STATIONS,
+  DELETE_SELECTED_BY_PRODUCT_STATIONS,
+  DELETE_SELECTED_BY_REGION_STATIONS,
   UPDATE_STATION_DONE,
 } from './station.types';
 
@@ -29,6 +31,25 @@ const StationReducer = (state = initialState, action) => {
           ...action.stationsData,
         ]
       }
+
+    case DELETE_SELECTED_BY_PRODUCT_STATIONS: {
+      const newStations = state.selectedByProductStations
+        .filter(station => station.productName !== action.product.name);
+      return {
+        ...state,
+        selectedByProductStations: newStations,
+      }
+    }
+
+    case DELETE_SELECTED_BY_REGION_STATIONS: {
+      const newStations = state.selectedByRegionStations
+        .filter(station => station.regionName !== action.region.name);
+      return {
+        ...state,
+        selectedByRegionStations: newStations,
+      }
+    }
+      
 
     case UPDATE_STATION_DONE:
       return updateStationDone(state, action);
