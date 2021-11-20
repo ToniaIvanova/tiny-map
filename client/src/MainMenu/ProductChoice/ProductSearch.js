@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Input, AutoComplete } from 'antd';
+import { Select, Tag } from 'antd';
 import styles from './ProductChoice.module.css';
+
+import { getColor } from '../../common/getColor';
 
 import ProductActions from '../../resources/product/product.actions';
 import ProductSelector from '../../resources/product/product.selector';
@@ -10,30 +12,24 @@ import StationActions from '../../resources/station/station.actions';
 
 function ProductSearch({
   selectedProductIds,
-  currentUser,
   nextProductColor,
   allProductsData,
-  incNextProductColor,
+  currentUser,
+
   switchOnProductTableVisibility,
   pushSelectedProductIds,
+  deleteSelectedProductId,
   pushSelectedByProductStations,
+  deleteSelectedByProductStations,
 }) {
   const [productsInSearch, setProductsInSearch] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const productsForSearch = allProductsData.map(product => {
-        return {
-          value: product._id,
-          label: product.name,
-        }
-      });
-      setAllProducts(productsForSearch);
-      setProductsInSearch(productsForSearch);
-    };
-    fetchProducts();
+    const productsForSearch = allProductsData.map(product => ({
+      value: product._id,
+      label: product.name,
+    }));
+    setProductsInSearch(productsForSearch);
   }, [allProductsData]);
 
   const onSelect = productId => {
@@ -41,31 +37,47 @@ function ProductSearch({
       pushSelectedByProductStations(productId, currentUser, nextProductColor);
       switchOnProductTableVisibility();
       pushSelectedProductIds(productId);
-      incNextProductColor(nextProductColor);
     }
   };
+  
+  const onDeselect = productId => {
+    deleteSelectedProductId(productId);
+    const productForDelete = allProductsData.find(product => product._id === productId);
+    deleteSelectedByProductStations(productForDelete);
+  }
 
-  const onSearch = productName => {
-    setSelectedValue(productName);
-    const newProducts = allProducts.filter((product) => 
-      product.label.toString().toLowerCase().indexOf(productName.toString().toLowerCase()) > -1
+  const tagRender = (props) => {
+    const { label, closable, onClose, value } = props;
+    const onPreventMouseDown = event => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const color = getColor(selectedProductIds, value);
+    return (
+      <Tag
+        color={color}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
     );
-    setProductsInSearch(newProducts);
-  };
+  }
 
   return <div className={styles.search}>
-    <AutoComplete
-      dropdownMatchSelectWidth={252}
-      style={{
-        width: 300,
-      }}
+    <Select
+      mode="multiple"
+      size="large"
+      showArrow
+      style={{ width: '100%' }}
+      placeholder="выберете продукт"
+      tagRender={tagRender}
       options={productsInSearch}
       onSelect={onSelect}
-      onSearch={onSearch}
-      value={selectedValue}
-    >
-      <Input.Search size="large" placeholder="название продукта" enterButton />
-    </AutoComplete>
+      onDeselect={onDeselect}
+    />
   </div>
 };
 
@@ -80,9 +92,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   switchOnProductTableVisibility: ProductActions.switchOnProductTableVisibility,
   pushSelectedProductIds: ProductActions.pushSelectedProductId,
-  incNextProductColor: ProductActions.incProductColorIndex,
+  deleteSelectedProductId: ProductActions.deleteSelectedProductId,
 
   pushSelectedByProductStations: StationActions.pushSelectedByProductStations,
+  deleteSelectedByProductStations: StationActions.deleteSelectedByProductStations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSearch)
