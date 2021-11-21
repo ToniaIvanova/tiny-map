@@ -6,6 +6,7 @@ import productReducer from './product/product.reducer';
 import regionReducer from './region/region.reducer';
 import stationReducer from './station/station.reducer';
 import tabReducer from './tab/tab.reducer';
+import { LOG_OUT } from './root.types';
 
 const reducers = combineReducers({
   user: userReducer,
@@ -14,8 +15,15 @@ const reducers = combineReducers({
   station: stationReducer,
   tab: tabReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === LOG_OUT) {
+    return reducers(undefined, action);
+  }
+  return reducers(state, action);
+}
 const store = createStore(
-  reducers,
+  rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 

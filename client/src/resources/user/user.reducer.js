@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_USER,
+  GET_PROFILE_BY_TOKEN,
   LOG_IN,
   LOG_IN_ERROR,
   SIGN_UP,
@@ -14,12 +15,17 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SIGN_UP:
-    case LOG_IN:
     case SET_CURRENT_USER:
+    case GET_PROFILE_BY_TOKEN:
+    case LOG_IN:
+    case SIGN_UP:
       return {
         ...state,
-        currentUser: action.currentUser,
+        currentUser:{
+          name: action.currentUser.name,
+          _id: action.currentUser._id,
+          isAdmin: action.currentUser.isAdmin,
+        }
       };
 
     case LOG_IN_ERROR:

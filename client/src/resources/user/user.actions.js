@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_USER,
+  GET_PROFILE_BY_TOKEN,
   LOG_IN,
   LOG_IN_ERROR,
   SIGN_UP,
@@ -15,11 +16,24 @@ const UserActions = {
     return dispatch({ type: SET_CURRENT_USER, currentUser });
   },
 
+  getProdileByToken: token => async dispatch => {
+    if (!token) return;
+    const response = await api.get('/user/profile', { headers: { "Authorization" : `Bearer ${token}` } });
+    console.log({ response });
+    const currentUser = response.data;
+    if (currentUser.name) {
+      return dispatch({ type: GET_PROFILE_BY_TOKEN, currentUser });
+    }
+  },
+
   logIn: (username, password) => async dispatch => {
     const response = await api.post('/user/login', { username, password });
     const currentUser = response.data;
     if (currentUser.errorMessage) {
       return dispatch({ type: LOG_IN_ERROR, errorMessage: currentUser.errorMessage });
+    }
+    if (currentUser.access_token) {
+      localStorage.setItem('user-token', currentUser.access_token);
     }
     return dispatch({ type: LOG_IN, currentUser });
   },
@@ -29,6 +43,9 @@ const UserActions = {
     const currentUser = response.data;
     if (currentUser.errorMessage) {
       return dispatch({ type: SIGN_UP_ERROR, errorMessage: currentUser.errorMessage });
+    }
+    if (currentUser.access_token) {
+      localStorage.setItem('user-token', currentUser.access_token);
     }
     return dispatch({ type: SIGN_UP, currentUser });
   },

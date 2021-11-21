@@ -3,16 +3,12 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './Authorization.module.css';
 import UserActions from '../resources/user/user.actions';
-import ProductActions from '../resources/product/product.actions';
-import RegionActions from '../resources/region/region.actions';
 import UserSelector from '../resources/user/user.selector';
 
 const LogIn = ({
   errorType,
   logIn,
   resolveError,
-  getAllProducts,
-  getAllRegions
 }) => {
   const [nameStatus, setNameStatus] = useState('');
   const [nameHelp, setNameHelp] = useState(null);
@@ -32,8 +28,6 @@ const LogIn = ({
 
   const onFinish = ({ username, password }) => {
     logIn(username, password);
-    getAllProducts();
-    getAllRegions();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -105,10 +99,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logIn: UserActions.logIn,
   resolveError: UserActions.resolveError,
-
-  getAllProducts: ProductActions.getAllProducts,
-
-  getAllRegions: RegionActions.getAllRegions,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
