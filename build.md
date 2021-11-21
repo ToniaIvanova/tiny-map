@@ -1,6 +1,7 @@
 To deploy server to heroku:
 ```cmd
 cd server
+npm run build
 cd stormy-brook-68283
 git add .
 git commit -am "make it better"

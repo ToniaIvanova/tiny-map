@@ -11,11 +11,12 @@ import ProductChoice from './ProductChoice/ProductChoice';
 import RegionChoice from './RegionChoice/RegionChoice';
 import NewStation from './NewStation/NewStation';
 import TabActions from '../resources/tab/tab.actions';
+import UserSelector from '../resources/user/user.selector';
 
 const { TabPane } = Tabs;
 
-function MainMenu({ changeActiveTab }) {
-  const tabChange = (key) => {
+function MainMenu({ currentUser, changeActiveTab }) {
+  const tabChange = key => {
     changeActiveTab(key);
   };
 
@@ -27,15 +28,19 @@ function MainMenu({ changeActiveTab }) {
       <TabPane tab="По регионам" key={REGION_TAB}>
         <RegionChoice />
       </TabPane>
-      <TabPane tab="Добавить новую станцию" key={CREATE_STATION_TAB}>
+      {currentUser.isAdmin && <TabPane tab="Добавить новую станцию" key={CREATE_STATION_TAB}>
         <NewStation />
-      </TabPane>
+      </TabPane>}
     </Tabs>
   </div>
 }
+
+const mapStateToProps = state => ({
+  currentUser: UserSelector.getCurrentUser(state),
+});
 
 const mapDispatchToProps = {
   changeActiveTab: TabActions.changeActiveTab,
 }
 
-export default connect(null, mapDispatchToProps)(MainMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);
