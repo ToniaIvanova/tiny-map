@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start:client": "cd client && npm start",
-    "start:server": "cd server && npm start"
+    "start:server": "cd server && npm run start:dev"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

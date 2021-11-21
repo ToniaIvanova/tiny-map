@@ -16,7 +16,7 @@ import {
 } from "react-router-dom";
 import UserSelector from './resources/user/user.selector';
 import MainMenu from './MainMenu/MainMenu';
-import LogIn from './LogIn/LogIn';
+import Authorization from './Authorization/Authorization';
 
 function App({ currentUser }) {
   return (
@@ -33,7 +33,7 @@ function App({ currentUser }) {
           </Router>)
           : (<Router>
             <Routes>
-              <Route path="/login" element={<LogIn />} />
+              <Route path="/login" element={<Authorization />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
           </Router>)

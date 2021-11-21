@@ -18,20 +18,24 @@ export class UserService {
 
   async signUp(logIn: LogIn) {
     const { username, password } = logIn;
+    const allUsers: User[] = await this.userModel.find().exec();
+    const isUsernameExist: boolean = allUsers.find(
+      (user) => user.name === username,
+    )
+      ? true
+      : false;
+    if (isUsernameExist) {
+      return { errorMessage: 'USERNAME_EXIST' };
+    }
     const saltRounds = 10;
-    bcrypt.hash(
-      password,
-      saltRounds,
-      async (err: Error, passwordHash: string) => {
-        return this.userModel.create({
-          name: username,
-          passwordHash,
-        });
-      },
-    );
-    return this.userModel
-      .findOne({ name: username }, { _id: 1, name: 1 })
-      .exec();
+    const passwordHash: string = await bcrypt.hash(password, saltRounds);
+
+    return this.userModel.create({
+      name: username,
+      passwordHash,
+      doneStations: [],
+      isAdmin: false,
+    });
   }
 
   async logIn(logIn: LogIn) {
