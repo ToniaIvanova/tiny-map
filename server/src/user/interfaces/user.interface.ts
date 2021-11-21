@@ -5,4 +5,5 @@ export interface User extends Document {
   readonly passwordHash: string;
   readonly doneStations: Types.ObjectId[];
   readonly isAdmin: boolean;
+  access_token?: string;
 }

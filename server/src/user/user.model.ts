@@ -6,6 +6,10 @@ export const UserSchema = new mongoose.Schema(
     passwordHash: String,
     doneStations: [mongoose.Schema.Types.ObjectId],
     isAdmin: Boolean,
+    access_token: {
+      type: String,
+      required: false,
+    },
   },
   {
     versionKey: false,
