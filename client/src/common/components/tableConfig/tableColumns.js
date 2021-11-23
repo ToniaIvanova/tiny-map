@@ -32,11 +32,11 @@ const tableColumns = [
     render: station => <StationDoneSwitch station={station} />,
     filters: [
       {
-        text: 'Done',
+        text: 'Выполненые',
         value: true,
       },
       {
-        text: 'Not Done',
+        text: 'Невыполненые',
         value: false,
       },
     ],

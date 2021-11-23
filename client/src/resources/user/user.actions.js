@@ -6,6 +6,7 @@ import {
   SIGN_UP,
   SIGN_UP_ERROR,
   RESOLVE_ERROR,
+  RATING,
 } from './user.types';
 import api from '../../common/base.api';
 
@@ -51,6 +52,12 @@ const UserActions = {
   },
 
   resolveError: () => dispatch => dispatch({ type: RESOLVE_ERROR }),
+
+  getRating: () => async dispatch => {
+    const response = await api.get('user/rating');
+    const userRatings = response.data;
+    return dispatch({ type: RATING, userRatings });
+  }
 };
 
 export default UserActions;

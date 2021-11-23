@@ -5,12 +5,14 @@ import {
   LOG_IN_ERROR,
   SIGN_UP,
   SIGN_UP_ERROR,
-  RESOLVE_ERROR
+  RESOLVE_ERROR,
+  RATING,
 } from './user.types';
 
 const initialState = {
   currentUser: null,
   errorType: null,
+  userRatings: null,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -39,6 +41,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         errorType: null,
+      }
+    
+    case RATING:
+      return {
+        ...state,
+        userRatings: action.userRatings,
       }
 
     default: 

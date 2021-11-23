@@ -7,3 +7,5 @@ export const SIGN_UP = 'SIGN_UP';
 export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 
 export const RESOLVE_ERROR = 'RESOLVE_ERROR';
+
+export const RATING = 'RATING';

@@ -72,7 +72,7 @@ function ProductSearch({
       size="large"
       showArrow
       style={{ width: '100%' }}
-      placeholder="выберете продукт"
+      placeholder="выберите продукт"
       tagRender={tagRender}
       options={productsInSearch}
       onSelect={onSelect}
