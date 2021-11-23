@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
 import { LogIn } from './dto/login.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { UserForRating } from './dto/user-for-rating.dto';
 
 @Injectable()
 export class UserService {
@@ -68,5 +69,17 @@ export class UserService {
   async isUsernameExist(name: string): Promise<boolean> {
     const allUsers: User[] = await this.userModel.find().exec();
     return allUsers.find((user) => user.name === name) ? true : false;
+  }
+
+  async getRating(): Promise<UserForRating[]> {
+    const allUsers: User[] = await this.userModel.find().exec();
+    const usersForRating: UserForRating[] = allUsers.map((user) => ({
+      _id: user._id,
+      key: user._id,
+      name: user.name,
+      rating: user.doneStations.length,
+    }));
+    usersForRating.sort((a, b) => b.rating - a.rating);
+    return usersForRating;
   }
 }

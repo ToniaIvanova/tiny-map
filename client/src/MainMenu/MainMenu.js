@@ -6,12 +6,14 @@ import {
   PRODUCT_TAB,
   REGION_TAB,
   CREATE_STATION_TAB,
+  RATING_TAB,
 } from '../common/constants/tabs';
 import ProductChoice from './ProductChoice/ProductChoice';
 import RegionChoice from './RegionChoice/RegionChoice';
 import NewStation from './NewStation/NewStation';
 import TabActions from '../resources/tab/tab.actions';
 import UserSelector from '../resources/user/user.selector';
+import Rating from './Rating/Rating';
 
 const { TabPane } = Tabs;
 
@@ -31,6 +33,9 @@ function MainMenu({ currentUser, changeActiveTab }) {
       {currentUser.isAdmin && <TabPane tab="Добавить новую станцию" key={CREATE_STATION_TAB}>
         <NewStation />
       </TabPane>}
+      <TabPane tab="Рейтинг" key={RATING_TAB}>
+        <Rating />
+      </TabPane>
     </Tabs>
   </div>
 }

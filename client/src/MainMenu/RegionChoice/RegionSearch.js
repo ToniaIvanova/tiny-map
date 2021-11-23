@@ -72,7 +72,7 @@ function RegionSearch({
       size="large"
       showArrow
       style={{ width: '100%' }}
-      placeholder="выберете регион"
+      placeholder="выберите регион"
       tagRender={tagRender}
       options={regionsInSearch}
       onSelect={onSelect}
